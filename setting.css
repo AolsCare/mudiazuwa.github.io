@@ -34,7 +34,7 @@ body{
     transition: background-color o.1s ease-in-out;
 }
 .nav__link:hover{
-    background-color: #E1F5FE;
+    background-color: #FFA726;
   
 }
 .nav__link--active{

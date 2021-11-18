@@ -44,11 +44,12 @@ font-size: 16px;
 }
 .items_view{
     background-color: white;
-    width:200px;
-    padding: 10px;
+    width:33%;
+    padding: 5px;
     border-radius: 15px;
-    margin: 8px;
+    margin: 0.5%;
     align-content: center;
+    float: left;
 }
 .item_price{
     text-align: right;
@@ -94,7 +95,7 @@ section{
     transition: background-color o.1s ease-in-out;
 }
 .nav__link:hover{
-    background-color: #E1F5FE;
+    background-color: #FFA726;
   
 }
 .nav__link--active{

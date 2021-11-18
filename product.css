@@ -2,10 +2,13 @@ body{
     background-color: #ECEFF1;
     padding-top: 0px;
     margin-top: -1px;
-    margin-bottom: -1px;
+    margin-bottom: 55px;
     margin-left: -1px;  
     background: #e6e6e6;  
     margin-right: -1px;
+}
+p{
+    cursor: default;
 }
 .div2{
     width:100%;
@@ -76,11 +79,12 @@ display: flex;
 }
 .items_view{
     background-color: white;
-    width:200px;
+    width:33%;
     padding: 5px;
     border-radius: 15px;
-    margin: 8px;
+    margin: 0.5%;
     align-content: center;
+    float: left;
 }
 .item_price{
     text-align: right;
@@ -169,36 +173,38 @@ section{
     
     padding: 0px;
 }
-#minus-box{
+.box{
     height: 45px;
-    margin: 5px 0px 5px 5px;
-    font-size: 50px;
-    background-color: #FF9800;
-    color: white;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     flex-grow: 1;
+    min-width: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    font-family: sans-serif;
+    font-size: 50px;
+    color: white;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color o.1s ease-in-out;
+    background-color: #FF9800;
+    height: 45px;
+    cursor: default;
+}
+#minus-box{
+    margin: 5px 0px 5px 5px;
 }
 #plus-box{
     height: 45px;
     margin: 5px 5px 5px 0px;
-    font-size: 50px;
-    background-color: #FF9800;
-    color: white;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
+    
 }
 #add-box{
-    height: 45px;
-    width: 100%;
+     width: 100%;
     margin: 5px;
-    background-color: #FF9800;
-    color: black;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
 }
