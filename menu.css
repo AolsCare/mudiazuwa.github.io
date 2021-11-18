@@ -6,6 +6,8 @@ body{
     margin-bottom: 55px;
     margin-left: -1px;
     margin-right: -1px;
+    width: 100vw;
+    height: 100vh;
 }
 #div2{
     width:100%;
