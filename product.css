@@ -171,7 +171,7 @@ section{
     background-color: white;
     display: flex;
     
-    padding: 0px;
+    padding: 5px;
 }
 .box{
     height: 45px;
@@ -193,17 +193,11 @@ section{
     height: 45px;
     cursor: default;
 }
-#minus-box{
-    margin: 5px 0px 5px 5px;
-}
-#plus-box{
-    height: 45px;
-    margin: 5px 5px 5px 0px;
-    
-}
+
+
 #add-box{
      width: 100%;
-    margin: 5px;
+    margin: 0px 5px 0px 5px;
   font-size: 18px;
   font-weight: bold;
   color: black;
