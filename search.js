@@ -36,7 +36,7 @@ window.onload=function(){
         var key= Object.keys(arr)[x]
         var value=arr[key]
         var searchvalue=value["name"]
-        if(searchvalue.includes(searchitem)){
+        if(searchvalue.toLowerCase().includes(searchitem.toLowerCase())){
             
             var view=document.createElement("div")
             view.classList.add("item_view")

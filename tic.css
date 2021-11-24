@@ -2,3 +2,8 @@ div{
     align-content: center;
     align-self: center;
 }
+.butt{
+    display: flex;
+    flex-wrap: nowrap;
+    align-content: center;
+}

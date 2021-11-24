@@ -28,7 +28,7 @@ var cart_num;
 var item_code;
 window.onload=function(){
   var searchitem= sessionStorage.getItem("loaditem")
-  cart_item.push(sessionStorage.getItem("cart"))
+  cart_item.push(localStorage.getItem("cart"))
    get_cart(searchitem)
    const dbref=ref(db);
   get(child(dbref,"upload/")).then((snapshot)=>{
@@ -168,6 +168,6 @@ minus.onclick=function(){
     var cn=cart_item.length-1
     cart.innerHTML=cart_num
     cart_item[cn].code=cart_num
-    localStorage.setItem("cart", cart_item)
+    localStorage.setItem("cart", cart_item.toString)
   }
 };
