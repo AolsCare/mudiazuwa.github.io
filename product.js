@@ -28,7 +28,6 @@ var cart_num;
 var item_code;
 window.onload=function(){
   var searchitem= sessionStorage.getItem("loaditem")
-  cart_item.push(localStorage.getItem("cart"))
    get_cart(searchitem)
    const dbref=ref(db);
   get(child(dbref,"upload/")).then((snapshot)=>{
@@ -70,6 +69,41 @@ window.onload=function(){
   }
   })
 }
+document.addEventListener('touchstart', handleTouchStart, false);        
+document.addEventListener('touchmove', handleTouchMove, false);
+
+var xDown = null;                                                        
+var yDown = null;                                                        
+
+function handleTouchStart(evt) {                                         
+    xDown = evt.originalEvent.touches[0].clientX;                                      
+    yDown = evt.originalEvent.touches[0].clientY;                                      
+};                                                
+
+function handleTouchMove(evt) {
+    if ( ! xDown || ! yDown ) {
+        return;
+    }
+
+    var xUp = evt.originalEvent.touches[0].clientX;                                    
+    var yUp = evt.originalEvent.touches[0].clientY;
+
+    var xDiff = xDown - xUp;
+    var yDiff = yDown - yUp;
+
+    if ( Math.abs( xDiff ) > Math.abs( yDiff ) ) {/*most significant*/
+        if ( xDiff > 0 ) {
+            /* left swipe */ 
+            displaySlides(slide_index += 1);
+        } else {
+            /* right swipe */
+            displaySlides(slide_index +=-1);
+        }                       
+    } 
+    /* reset values */
+    xDown = null;
+    yDown = null;                                             
+};
 var slide_index = 1;  
 displaySlides(slide_index);  
 
@@ -113,7 +147,7 @@ function sett(n){
   add.style.display="none"
   minus.style.display="none"
   avail="no"
-  console.log(cart_item[cn][code])
+  console.log(cart_item)
   do{
     if(code==cart_item[cn][code]){
       avail="yes"
@@ -144,7 +178,7 @@ if(avail==="no"){
  })
     cart.innerHTML=1
     cart_num=1
-    sessionStorage.setItem("cart", cart_item)
+    localStorage.setItem("cart", cart_item)
 }
 };
 add.onclick=function(){
@@ -168,6 +202,6 @@ minus.onclick=function(){
     var cn=cart_item.length-1
     cart.innerHTML=cart_num
     cart_item[cn].code=cart_num
-    localStorage.setItem("cart", cart_item.toString)
+    localStorage.setItem("cart", cart_item)
   }
 };
