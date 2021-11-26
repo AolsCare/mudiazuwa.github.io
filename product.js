@@ -27,8 +27,10 @@ var avail="no"
 var cart_num;
 var item_code;
 window.onload=function(){
-  var searchitem= sessionStorage.getItem("loaditem")
-   get_cart(searchitem)
+  var params=new URLSearchParams(window.location.search)
+  var searchitem=params.get("product")
+  cart_item=localStorage.getItem("cart").Array
+   //get_cart(searchitem)
    const dbref=ref(db);
   get(child(dbref,"upload/")).then((snapshot)=>{
     if(snapshot.exists()){
@@ -69,8 +71,6 @@ window.onload=function(){
   }
   })
 }
-document.addEventListener('touchstart', handleTouchStart, false);        
-document.addEventListener('touchmove', handleTouchMove, false);
 document.getElementById("slidercontainer").addEventListener('touchstart', handleTouchStart, false);        
 document.getElementById("slidercontainer").addEventListener('touchmove', handleTouchMove, false);
 

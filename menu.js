@@ -26,8 +26,9 @@ function item(){
 }
  function sear(){
   var searchitem=document.getElementById("div2").value
-  sessionStorage.setItem("searchitem", searchitem)
-  window.location="search.html"
+  const myURL= new URL(window.location.protocol+"//"+window.location.host+"/search.html")
+  myURL.searchParams.append("search",searchitem)
+  window.location=myURL
 }
 
 var x;

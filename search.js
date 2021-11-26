@@ -22,7 +22,8 @@ from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 const db= getDatabase();
 
 window.onload=function(){
-    var searchitem= sessionStorage.getItem("searchitem")
+    var params=new URLSearchParams(window.location.search)
+    var searchitem=params.get("search")
     document.getElementById("div2").value= searchitem
     const dbref=ref(db);
     get(child(dbref,"upload/")).then((snapshot)=>{
@@ -67,15 +68,18 @@ window.onload=function(){
     })
 }
 function sear(){
-    var searchitem=document.getElementById("div2").value
-    sessionStorage.setItem("searchitem", searchitem)
-    window.location="search.html";
-  }  
+  var searchitem=document.getElementById("div2").value
+  const myURL= new URL(window.location.protocol+"//"+window.location.host+"/search.html")
+  myURL.searchParams.append("search",searchitem)
+  window.location=myURL
+}
+
  
   function load(view, code){
     document.getElementById(view).onclick=function() {
-      sessionStorage.setItem("loaditem", code)
-    window.location="product.html";
+      const myURL= new URL(window.location.protocol+"//"+window.location.host+"/product.html")
+      myURL.searchParams.append("product",code)
+      window.location=myURL;
     }
   }
 document.getElementById("div2").addEventListener('search', sear)
