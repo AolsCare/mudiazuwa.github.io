@@ -44,6 +44,7 @@ window.onload=function(){
       var value=arr[key]
       var searchvalue=value["code"]
       if(searchvalue===searchitem){
+        document.getElementById("page_title").innerHTML=value["name"]
           document.getElementById("item_name").innerHTML=value["name"]
           document.getElementById("item_price").innerHTML="₦"+value["price"]
           document.getElementById("item_description").innerHTML=value["description"]
