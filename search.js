@@ -22,6 +22,7 @@ from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 const db= getDatabase();
 
 window.onload=function(){
+  document.getElementById("title").innerHTML=window.location.host
     var params=new URLSearchParams(window.location.search)
     var searchitem=params.get("search")
     document.getElementById("div2").value= searchitem

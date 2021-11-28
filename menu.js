@@ -52,6 +52,7 @@ function sett(n){
 }
 document.getElementById("div2").addEventListener('search', sear);
 window.onload=function(){
+  document.getElementById("title").innerHTML=window.location.host
   var i=0;
   do{
     var p=i
