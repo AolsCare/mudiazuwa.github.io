@@ -40,3 +40,53 @@ body{
 .nav__link--active{
     color: white;
 }
+body{
+    background-color: #ECEFF1;
+    padding-top: 0px;
+    margin-top: -1px;
+    margin-bottom: 55px;
+    margin-left: -1px;  
+    background: #e6e6e6;  
+    margin-right: -1px;
+}
+p{
+    cursor: default;
+}
+.div2{
+    width:100%;
+}
+#div1{
+    background-color: #FF9800;
+    width: 100%;
+    display: flex;
+    font-size: 30px;
+    padding: auto;
+}
+#option{
+    width: 30px;
+    height: 30px;
+    object-fit: scale-down;
+    margin: 10px 5px 10px 10px;
+}
+#cart{
+    width: 30px;
+    height: 30px;
+    object-fit: scale-down;
+    margin: 10px 5px 10px 10px;
+}
+header{
+    height: 180px;
+    background-color: #FF9800;
+}
+.div3{
+    background-color: #FF9800;
+    width: 100%;
+    padding: 0px;
+    display: flex;
+}
+#login{
+    font-size: 18px;
+    height: fit-content;
+    padding: 8px;
+    margin: auto;
+}

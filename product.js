@@ -25,12 +25,13 @@ var minus=document.getElementById("minus-box")
 var cart =document.getElementById("add-box")
 var avail="no"
 var cart_num;
+var newcart_item=new Array;
 var item_code;
+var cn;
 window.onload=function(){
   var params=new URLSearchParams(window.location.search)
   var searchitem=params.get("product")
-  cart_item=localStorage.getItem("cart").Array
-   //get_cart(searchitem)
+ 
    const dbref=ref(db);
   get(child(dbref,"upload/")).then((snapshot)=>{
     if(snapshot.exists()){
@@ -38,7 +39,7 @@ window.onload=function(){
       var numb=  snapshot.val()
     var lenth=Object.keys(numb).length
     var x= lenth-1
-    
+   
     do{
       var key= Object.keys(arr)[x]
       var value=arr[key]
@@ -52,6 +53,9 @@ window.onload=function(){
           var urln=1
           var urlx=value["num"]
           item_code=value["code"]
+          var retrieve=localStorage.getItem("cart")
+          cart_item=JSON.parse(retrieve)
+         get_cart(searchitem)
           do{
             var cont= document.createElement("div")
             cont.classList.add("container")
@@ -145,23 +149,27 @@ function sett(n){
     })
   }
   function get_cart(code){
-  var cart_length=cart_item.length
-  var cn=0
+    var cartn=0
   add.style.display="none"
   minus.style.display="none"
   avail="no"
-  console.log(cart_item)
+  if(cart_item!==null){
+  var cart_length=cart_item.length
+  newcart_item=cart_item
+  
   do{
-    if(code==cart_item[cn][code]){
+    if(code==cart_item[cartn]["code"]){
       avail="yes"
-      cart.innerHTML=cart_item[cn].code
+      cart.innerHTML=cart_item[cartn]["number"]
       cart.style.backgroundColor="white"
       add.style.display="flex"
   minus.style.display="flex"
-  cart_num=cart_item[cn].number
+  cart_num=cart_item[cartn].number
+  cn=cartn
     }
-    cn++
-  }while(cn<cart_length)
+    cartn++
+  }while(cartn<cart_length)
+}
 }
 document.getElementById("left").onclick=function() {
   displaySlides(slide_index += -1); 
@@ -175,36 +183,39 @@ if(avail==="no"){
   minus.style.display="flex"
   avail="yes"
   cart.style.backgroundColor="white"
-  cart_item.push({
+  
+  newcart_item.push({
     code:item_code,
     number:1
  })
     cart.innerHTML=1
-    cart_num=1
-    localStorage.setItem("cart", cart_item)
-}
+    cart_num=1 
+    localStorage.setItem("cart", JSON.stringify(newcart_item)) 
+    cn=newcart_item.length-1
+  }
 };
 add.onclick=function(){
   cart_num++
-  var cn=cart_item.length-1
   cart.innerHTML=cart_num
-  cart_item[cn].code=cart_num
-  localStorage.setItem("cart", cart_item)
+  newcart_item[cn].number=cart_num
+  localStorage.setItem("cart", JSON.stringify(newcart_item)) 
 };
 minus.onclick=function(){
   cart_num--
   if(cart_num==0){
-    var cn=cart_item.length-1
+    
     cart_item.splice(cn, 1)
     add.style.display="none"
   minus.style.display="none"
   avail="no"
   cart.style.backgroundColor="#FF9800"
   cart.innerHTML="Add to cart"
+  newcart_item.splice(cn, 1)
+  localStorage.setItem("cart", JSON.stringify(newcart_item)) 
   }else{
-    var cn=cart_item.length-1
+   
     cart.innerHTML=cart_num
-    cart_item[cn].code=cart_num
-    localStorage.setItem("cart", cart_item)
+    newcart_item[cn].number=cart_num
+   localStorage.setItem("cart", JSON.stringify(newcart_item)) 
   }
 };

@@ -1,4 +1,4 @@
-/*function save(){
+function save(){
     var key=document.getElementById("key").value
     var value=document.getElementById("value").value
 var arr=new Array()
@@ -6,12 +6,15 @@ var arr=new Array()
  arr.push({
     [key]:value
  })
-var send=arr[0][key]
+ localStorage.setItem("array", JSON.stringify(arr))
+var retrieve=localStorage.getItem("array")
+var send=JSON.parse(retrieve)
 alert(send)
+console.log(send[0]["mudia"])
 document.getElementById("p").innerHTML="send"
 }
-cart_item=localStorage.getItem("cart")
-  */
+
+  
 
  
     const myURL= new URL(window.location.protocol+"//"+window.location.host+"/file.html")

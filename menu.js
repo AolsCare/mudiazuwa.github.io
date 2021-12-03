@@ -32,31 +32,62 @@ function item(){
 }
 
 var x;
-
+var arr, key, value, lenth
 function sett(n){
+ 
+  x= Math.floor(Math.random()*lenth)+0
+   key= Object.keys(arr)[x]
+   value=arr[key]
+   var view=document.createElement("div")
+   view.classList.add("items_view")
+   view.setAttribute('id', n)
+   var image=document.createElement("img")
+   image.classList.add("items_image")
+   image.src=value["url0"]
+   view.appendChild(image)
+  var name=document.createElement("p")
+  name.classList.add("item_name")
+  name.innerHTML=value["name"]
+  view.appendChild(name)
+  var price=document.createElement("p")
+  price.classList.add("item_price")
+  price.innerHTML="₦"+value["price"]
+  price.setAttribute('style', 'color:#FF9800')
+  view.appendChild(price)
+  var body=document.getElementById("body")
   
-  const dbref=ref(db);
-  get(child(dbref,"upload/")).then((snapshot)=>{
-    if(snapshot.exists()){
-      var arr = snapshot.val()
-    var lenth=Object.keys(arr).length
-    lenth--
-    x= Math.floor(Math.random()*lenth)+0
-    var key= Object.keys(arr)[x]
-    var value=arr[key]
-    document.getElementById("name"+n).innerHTML=value["name"]
-    document.getElementById("price"+n).innerHTML="₦"+value["price"]
-    document.getElementById("img"+n).src=value["url0"]
-  }
-  })
+  sect.append(view)
+  body.append(sect)
+  load(n, value["code"])
 }
+var sect;
 document.getElementById("div2").addEventListener('search', sear);
 window.onload=function(){
   document.getElementById("title").innerHTML=window.location.host
   var i=0;
-  do{
-    var p=i
-    i++
-    sett(i)
-  }while(i<=3) 
+  const dbref=ref(db);
+  get(child(dbref,"upload/")).then((snapshot)=>{
+    if(snapshot.exists()){
+       arr = snapshot.val()
+     lenth=Object.keys(arr).length
+    lenth--
+    
+    do{
+      var p=i
+      i++
+      if(i%3==1){
+        sect=document.createElement("section")
+      }
+      sett(i)
+    }while(i<=lenth+1) 
+  }
+  })
+  
  }
+ function load(view, code){
+  document.getElementById(view).onclick=function() {
+    const myURL= new URL(window.location.protocol+"//"+window.location.host+"/product.html")
+    myURL.searchParams.append("product",code)
+    window.location=myURL;
+  }
+}
