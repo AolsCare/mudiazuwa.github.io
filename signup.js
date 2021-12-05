@@ -22,7 +22,8 @@ const db= getDatabase();
 var first, last, hostel, email, password, gender, hostel, phone;
 document.getElementById("submit").onclick=function(){
    Ready()
-   if(first!==null&&last!==null&&email!==null&&password!==null&&phone!==null&&gender!==null&&hostel!==null){
+   document.getElementById("loader").setAttribute("style", "display:block")
+   if(first!==""&&last!==""&&email!==""&&password!==""&&phone!==""&&gender!==""&&hostel!==""){
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -31,6 +32,7 @@ document.getElementById("submit").onclick=function(){
         InsertData(user)
       })
       .catch((error) => {
+        document.getElementById("loader").setAttribute("style", "display:none")
         const errorCode = error.code;
         const errorMessage = error.message;
         alert(errorMessage)
@@ -59,22 +61,63 @@ function InsertData(user){
                 var x= lenth-1
             var key= Object.keys(arr)[x]
             var value=arr[key]
-            var code=value["code"]+1
+            var code1=value["code"]
+            var code=parseInt(code1)+1
             }else{
                 var code=100001
             }
            
-              set(ref(db, 'user/'+user),{
+              set(ref(db, 'user/'+code),{
                   code:code,
                   first: first,
                   second: last,
                   email:email,
                   hostel: hostel,
                   gender: gender,
-                  phone:`+234$[phone]`
+                  phone:[phone],
+                  key: code
               })
+              .then(()=>{
+                set_info()
+              })
+             .catch((error)=>{
+              document.getElementById("loader").setAttribute("style", "display:none")
+               alert(error);
+             })
             }
           })
-         
+          function set_info(){
+            get(child(dbref,"user/")).then((snapshot)=>{
+                if(snapshot.exists()){
+                    var arr = snapshot.val()
+                    var numb=  snapshot.val()
+                  var lenth=Object.keys(numb).length
+                  var x= lenth-1
+                  do{
+                    var key= Object.keys(arr)[x]
+                    var value=arr[key]
+                    var searchvalue=value["email"]
+                    if(email===searchvalue){
+                 var info= new Object
+                  info={
+                    user: value["code"],
+                    email:value["email"],
+                    first:value["first"],
+                    name:value["first"]+" "+value["second"],
+                    hostel:value["hostel"],
+                    gender:value["gender"],
+                    phone:value["phone"],
+                    key: value["key"],
+                    login: "yes"
+                  }
+                  localStorage.setItem("details", JSON.stringify(info) )
+                  window.location="index.html"
+                }
+                x--
+                }while(x>=0)
+                }
+              })
+          
+        }
 }
 

@@ -1,0 +1,44 @@
+body{
+    background-color: #ECEFF1;
+    padding-top: 0px;
+    margin-top: -1px;
+    margin-bottom: 55px;
+    margin-left: -1px;  
+    background: white;  
+    margin-right: -1px;
+}
+p{
+    cursor: default;
+    padding: 0px;
+}
+.div2{
+    width:100%;
+    font-size: 25px;
+    padding: 0px;
+}
+#div1{
+    background-color: black;
+    width: 100%;
+    display: flex;
+    vertical-align: middle;
+    padding: 0px;
+}
+#option{
+    width: 40px;
+    height: 40px;
+    object-fit: scale-down;
+    margin: 10px 5px 10px 10px;
+}
+.item-view{
+    margin: 8px;
+    height: 157px;
+    width: 100%;
+}
+.item-view img{
+    height: 30px;
+}
+.item-image{
+    width: 80px;
+    height: 100px;
+    object-fit: scale-down;
+}

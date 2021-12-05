@@ -68,6 +68,7 @@ window.onload=function(){
   const dbref=ref(db);
   get(child(dbref,"upload/")).then((snapshot)=>{
     if(snapshot.exists()){
+      document.getElementById("loader").setAttribute("style", "display:none")
        arr = snapshot.val()
      lenth=Object.keys(arr).length
     lenth--
@@ -82,7 +83,9 @@ window.onload=function(){
     }while(i<=lenth+1) 
   }
   })
-  
+  document.getElementById("cart").onclick=function(){
+    window.location="cart.html"
+  }
  }
  function load(view, code){
   document.getElementById(view).onclick=function() {

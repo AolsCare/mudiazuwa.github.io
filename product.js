@@ -35,6 +35,8 @@ window.onload=function(){
    const dbref=ref(db);
   get(child(dbref,"upload/")).then((snapshot)=>{
     if(snapshot.exists()){
+      document.getElementById("loader").setAttribute("style", "display:none")
+      document.getElementById("body").setAttribute("style", "display:block")
       var arr = snapshot.val()
       var numb=  snapshot.val()
     var lenth=Object.keys(numb).length

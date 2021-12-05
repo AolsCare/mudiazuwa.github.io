@@ -63,3 +63,23 @@ color: #FF9800;
 font-size: 14px;
 padding: 8px;
 }
+#loader{
+    border: 9px solid #f3f3f3;
+    border-top: 9px solid #FF9800;
+     border-radius:50% ;
+     width: 10%;
+     height: 10%;
+     animation: spin 2s linear infinite alternate;
+  
+    position: fixed;
+    bottom: 40%;
+    left: 40%;
+    }
+@keyframes spin{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(1080deg);
+    }
+}

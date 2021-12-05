@@ -18,8 +18,29 @@ const analytics = getAnalytics(app);
 import { getAuth,signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } 
 from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 window.onload=function(){
-
+var details=JSON.parse( localStorage.getItem("details"))
+if(details!==null){
+  document.getElementById("login").innerHTML="Logout"
+  document.getElementById("loginrequest").innerHTML=details["email"]
+  document.getElementById("username").innerHTML=details["name"]
+}
 }
 document.getElementById("login").onclick=function(){
-window.location="signup.html"
+  if(document.getElementById("login").innerHTML==="Login"){
+window.location="signin.html"
+}
+else{
+  const auth = getAuth();
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    document.getElementById("login").innerHTML="Login"
+  document.getElementById("loginrequest").innerHTML="Please Login to your Account"
+  document.getElementById("username").innerHTML=""
+    localStorage.removeItem("details")
+  }).catch((error) => {
+    // An error happened.
+    alert(error)
+  });
+ 
+}
 }
