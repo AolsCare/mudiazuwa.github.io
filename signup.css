@@ -22,6 +22,7 @@ p{
     display: flex;
     vertical-align: middle;
     padding: 0px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #option{
     width: 40px;
@@ -46,6 +47,7 @@ p{
     padding: 8px;
     background-color: #ff9800;
     border: #ff9800;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #loader{
     border: 5px solid #f3f3f3;

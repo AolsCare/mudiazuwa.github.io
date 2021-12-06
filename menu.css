@@ -23,6 +23,7 @@ font-size: 16px;
     background-color: #FF9800;
     width: 100%;
     display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #body{
     width:100%;
@@ -52,6 +53,7 @@ font-size: 16px;
     margin: 0.5%;
     align-content: center;
     float: left;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .item_price{
     text-align: right;
@@ -78,7 +80,7 @@ section{
     background-color: #FF9800;
     display: flex;
     overflow-x: auto;
-    
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .nav__link{
     display: flex;

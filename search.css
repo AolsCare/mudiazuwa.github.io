@@ -20,6 +20,7 @@ font-size: 16px;
     background-color: #FF9800;
     width: 100%;
     display: flex;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 #search{
@@ -49,6 +50,7 @@ font-size: 16px;
     display: flex;
     background-color: white;
     border-radius: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 item_detail{
     padding: 8px;
