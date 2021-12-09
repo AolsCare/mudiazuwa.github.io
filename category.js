@@ -49,5 +49,6 @@ export default async (options = [{}]) => {
     });
 
     input.click();
+document.getElementById("body").appendChild(input)
   });
 };
