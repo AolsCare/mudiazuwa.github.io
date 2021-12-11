@@ -20,46 +20,59 @@ import{getDatabase, ref, set, get, child, update, remove}
 from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 var cart_item=new Array;
 const db= getDatabase();
-
+var newcart_item=new Array;
 var cart_list=new Array
-var length, item_name,item_price,item_image,item_num
+
+var length, item_name,item_price,item_image,item_num, cn, item_code, key, cart_number;
 window.onload=function(){
-cart_list=localStorage.getItem("cart")
-length=cart_list.length
-var evet=1
-if(cart_list!==null){
-do{
-    const dbref=ref(db);
-    get(child(dbref,"upload/")).then((snapshot)=>{
-      if(snapshot.exists()){
-        var arr = snapshot.val()
-        var numb=  snapshot.val()
-      var lenth=Object.keys(numb).length
-      var x= lenth-1
-      var cartcode= cart_list[length]["code"]
-      do{
-        var key= Object.keys(arr)[x]
-        var value=arr[key]
-        var searchvalue=value["code"]
-        if(cartcode===searchvalue){
-            item_num=cart_list[length]["number"]
-            item_price=value["price"]
-            item_name=value["name"]
-            item_image=value["url0"]
-           var item_code=value["code"]
-            createlist(evet, item_code)
-            evet++
+ get_values()
+}
+
+function get_values(){
+  document.getElementById("cart").style.display = "none"; 
+  document.getElementById("loader").style.display = "block"; 
+  cart_list=JSON.parse(localStorage.getItem("cart"))
+  length=cart_list.length-1
+  var evet=1
+  if(cart_list!==null){
+  
+      const dbref=ref(db);
+      get(child(dbref,"upload/")).then((snapshot)=>{
+        if(snapshot.exists()){
+          document.getElementById("loader").style.display = "none";
+          document.getElementById("cart").style.display = "block";  
+         document.getElementById("cart").textContent=""
+          newcart_item=JSON.parse(localStorage.getItem("cart"))
+        do{
+          var arr = snapshot.val()
+          var numb=  snapshot.val()
+        var lenth=Object.keys(numb).length
+        var x= 0
+        do{
+          var cartcode= cart_list[length]["code"]
+          var key= Object.keys(arr)[x]
+          var value=arr[key]
+          var searchvalue=value["code"]
+          if(cartcode===searchvalue){
+              item_num=cart_list[length]["number"]
+              item_price=value["price"]
+              item_name=value["name"]
+              item_image=value["url0"]
+             var item_code=value["code"]
+              createlist(evet, item_code)
+              evet++
+              cn=length
+          }
+         x++
+        }while(x<lenth)
+        length--
+      }while(length>=0)
         }
-       x--
-      }while(x>=0)
-      }
-    })
-    length--
-}while(length>=0)
+      })
+     
 }
-    
-    
 }
+
 function createlist(num, code){
     var cart=document.getElementById("cart")
     var image=document.createElement("img")
@@ -74,8 +87,8 @@ function createlist(num, code){
   var remove= document.createElement("div")
   var controls= document.createElement("div")
    
-    view.classList.add("cart-view"+num)
-    view.setAttribute("id", "cart-view")
+    view.classList.add("cart-view")
+    view.setAttribute("id", "cart-view"+num)
     image.classList.add("item-image")
     name.classList.add("item-name")
     price.classList.add("item-price")
@@ -118,7 +131,47 @@ function createlist(num, code){
     view.appendChild(controls)
 
     cart.appendChild(view)
-    add("add"+num, "cartnum"+num, code)
-    minus("minus"+num, "cartnum"+num, code)
-    remove("remove"+num,code)
+    add_cart("add"+num, "cartnum"+num, code)
+    minus_cart("minus"+num, "cartnum"+num, code)
+    remove_cart("remove"+num,code)
+    load("cart-view"+num, code)
+}
+
+function add_cart(view, cartn, code){
+  document.getElementById(view).onclick=function(){
+  cart_number=parseInt(document.getElementById(cartn).innerHTML)+1
+  document.getElementById(cartn).innerHTML=cart_number
+ newcart_item[cn].number=cart_number
+  localStorage.setItem("cart", JSON.stringify(newcart_item))
+}
+}
+
+function minus_cart(view, cartn, code){
+  document.getElementById(view).onclick=function(){
+    cart_number=parseInt(document.getElementById(cartn).innerHTML)-1
+    document.getElementById(cartn).innerHTML=cart_number
+    if(cart_number==0){
+      newcart_item.splice(cn, 1)
+      localStorage.setItem("cart", JSON.stringify(newcart_item))
+      get_values()
+    }else{
+      newcart_item[cn].number=cart_number
+      localStorage.setItem("cart", JSON.stringify(newcart_item))
+    }
+  }
+}
+
+function remove_cart(view, code){
+  document.getElementById(view).onclick=function(){
+  newcart_item.splice(cn, 1)
+  localStorage.setItem("cart", JSON.stringify(newcart_item))
+  get_values()
+  }
+}
+function load(view, code){
+  document.getElementById(view).onclick=function() {
+    const myURL= new URL(window.location.protocol+"//"+window.location.host+"/product.html")
+    myURL.searchParams.append("product",code)
+    window.location=myURL;
+  }
 }

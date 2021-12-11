@@ -83,14 +83,56 @@ window.onload=function(){
     }while(i<=lenth+1) 
   }
   })
-  document.getElementById("cart").onclick=function(){
-    window.location="cart.html"
-  }
+ 
  }
+ 
  function load(view, code){
   document.getElementById(view).onclick=function() {
     const myURL= new URL(window.location.protocol+"//"+window.location.host+"/product.html")
     myURL.searchParams.append("product",code)
     window.location=myURL;
+  }
+}
+function input_search(){
+  document.getElementById("div2").oninput=function(){
+  var searchitem=params.get("search")
+  document.getElementById("div2").value= searchitem
+  const dbref=ref(db);
+  get(child(dbref,"upload/")).then((snapshot)=>{
+    if(snapshot.exists()){
+      document.getElementById("loader").setAttribute("style", "display:none")
+      var arr = snapshot.val()
+      var numb=  snapshot.val()
+    var lenth=Object.keys(numb).length
+    var x= lenth-1
+    var evnt=1
+    var avail=0
+    do{
+      var key= Object.keys(arr)[x]
+      var value=arr[key]
+      var searchvalue=value["name"]
+      if(searchvalue.toLowerCase().includes(searchitem.toLowerCase())){
+          var option=document.createElement("option")
+          var datalist= document.getElementById("history")
+          option.setAttribute("value",value["name"] )
+          datalist.appendChild(option);
+          avail=1
+        }
+        x--
+      }while(x>=0)
+    }
+    })
+    if(avail==0){
+      get_history(searchitem)
+    }
+  }
+}
+function get_history(){
+ var history_array= JSON.parse(localStorage.getItem("history"))
+  for(var i=0; i<history_array; i++){
+    var option=document.createElement("option")
+    var datalist= document.getElementById("history")
+    option.setAttribute("value",value["name"] )
+    datalist.appendChild(option);
   }
 }

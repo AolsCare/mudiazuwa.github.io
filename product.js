@@ -24,10 +24,8 @@ var add=document.getElementById("plus-box")
 var minus=document.getElementById("minus-box")
 var cart =document.getElementById("add-box")
 var avail="no"
-var cart_num;
 var newcart_item=new Array;
-var item_code;
-var cn;
+var cn, lenth, item_code, key, cart_num, value, arr;
 window.onload=function(){
   var params=new URLSearchParams(window.location.search)
   var searchitem=params.get("product")
@@ -37,14 +35,14 @@ window.onload=function(){
     if(snapshot.exists()){
       document.getElementById("loader").setAttribute("style", "display:none")
       document.getElementById("body").setAttribute("style", "display:block")
-      var arr = snapshot.val()
+       arr = snapshot.val()
       var numb=  snapshot.val()
-    var lenth=Object.keys(numb).length
-    var x= lenth-1
+    lenth=Object.keys(numb).length
+     var x= lenth-1
    
     do{
       var key= Object.keys(arr)[x]
-      var value=arr[key]
+      value=arr[key]
       var searchvalue=value["code"]
       if(searchvalue===searchitem){
         document.getElementById("title").innerHTML=value["name"]
@@ -76,8 +74,27 @@ window.onload=function(){
       x--
     }while(x>=0)
   }
+  var i=0;
+  
+      document.getElementById("loader").setAttribute("style", "display:none")
+       arr = snapshot.val()
+     lenth=Object.keys(arr).length
+    lenth--
+    
+    do{
+      var p=i
+      i++
+      if(i%3==1){
+        sect=document.createElement("section")
+      }
+      sett(i)
+    }while(i<=6) 
+  
   })
-}
+  
+ }
+
+
 document.getElementById("slidercontainer").addEventListener('touchstart', handleTouchStart, false);        
 document.getElementById("slidercontainer").addEventListener('touchmove', handleTouchMove, false);
 
@@ -133,23 +150,7 @@ function displaySlides(n) {
 }  
 
 var pos;
-function sett(n){
-  
-    const dbref=ref(db);
-    get(child(dbref,"upload/")).then((snapshot)=>{
-      if(snapshot.exists()){
-        var arr = snapshot.val()
-      var lenth=Object.keys(arr).length
-      lenth--
-      pos= Math.floor(Math.random()*lenth)+0
-      var key= Object.keys(arr)[pos]
-      var value=arr[key]
-      document.getElementById("name"+n).innerHTML=value["name"]
-      document.getElementById("price"+n).innerHTML="₦"+value["price"]
-      document.getElementById("img"+n).src=value["url0"]
-    }
-    })
-  }
+
   function get_cart(code){
     var cartn=0
   add.style.display="none"
@@ -163,6 +164,7 @@ function sett(n){
     if(code==cart_item[cartn]["code"]){
       avail="yes"
       cart.innerHTML=cart_item[cartn]["number"]
+      cart.setAttribute("style", "box-shadow:none")
       cart.style.backgroundColor="white"
       add.style.display="flex"
   minus.style.display="flex"
@@ -179,13 +181,14 @@ document.getElementById("left").onclick=function() {
 document.getElementById("right").onclick=function() {
   displaySlides(slide_index += 1); 
 };
+
 cart.onclick=function(){
 if(avail==="no"){
   add.style.display="flex"
   minus.style.display="flex"
   avail="yes"
   cart.style.backgroundColor="white"
-  
+  cart.style.boxShadow="none"
   newcart_item.push({
     code:item_code,
     number:1
@@ -196,16 +199,17 @@ if(avail==="no"){
     cn=newcart_item.length-1
   }
 };
+
 add.onclick=function(){
   cart_num++
   cart.innerHTML=cart_num
-  newcart_item[cn].number=cart_num
+ newcart_item[cn].number=cart_num
   localStorage.setItem("cart", JSON.stringify(newcart_item)) 
 };
 minus.onclick=function(){
   cart_num--
   if(cart_num==0){
-    
+    cart.setAttribute("style", "  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);    ")
     cart_item.splice(cn, 1)
     add.style.display="none"
   minus.style.display="none"
@@ -215,9 +219,45 @@ minus.onclick=function(){
   newcart_item.splice(cn, 1)
   localStorage.setItem("cart", JSON.stringify(newcart_item)) 
   }else{
-   
     cart.innerHTML=cart_num
     newcart_item[cn].number=cart_num
    localStorage.setItem("cart", JSON.stringify(newcart_item)) 
   }
 };
+document.getElementById("cart").onclick=function(){
+  window.location="cart.html"
+}
+ function load(view, code){
+  document.getElementById(view).onclick=function() {
+    const myURL= new URL(window.location.protocol+"//"+window.location.host+"/product.html")
+    myURL.searchParams.append("product",code)
+    window.location=myURL;
+  }
+}
+function sett(n){
+ var x= Math.floor(Math.random()*lenth)+0
+   key= Object.keys(arr)[x]
+   value=arr[key]
+   var view=document.createElement("div")
+   view.classList.add("items_view")
+   view.setAttribute('id', n)
+   var image=document.createElement("img")
+   image.classList.add("items_image")
+   image.src=value["url0"]
+   view.appendChild(image)
+  var name=document.createElement("p")
+  name.classList.add("item_name")
+  name.innerHTML=value["name"]
+  view.appendChild(name)
+  var price=document.createElement("p")
+  price.classList.add("item_price")
+  price.innerHTML="₦"+value["price"]
+  price.setAttribute('style', 'color:#FF9800')
+  view.appendChild(price)
+  var body=document.getElementById("recom")
+  
+  sect.append(view)
+  body.append(sect)
+  load(n, value["code"])
+}
+var sect;
