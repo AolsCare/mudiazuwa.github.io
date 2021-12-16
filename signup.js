@@ -19,12 +19,28 @@ import{getDatabase, ref, set, get, child, update, remove}
   from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 import { getAuth,signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 const db= getDatabase();
-var first, last, hostel, email, password, gender, hostel, phone;
+var first, last, hostel,code, email, password, gender, hostel, phone;
 document.getElementById("submit").onclick=function(){
    Ready()
+   
    document.getElementById("loader").setAttribute("style", "display:block")
    if(first!==""&&last!==""&&email!==""&&password!==""&&phone!==""&&gender!==""&&hostel!==""){
-    const auth = getAuth();
+    const dbref=ref(db);
+    get(child(dbref,"user/")).then((snapshot)=>{
+      if(snapshot.exists()){
+          var arr = snapshot.val()
+          var numb=  snapshot.val()
+        var lenth=Object.keys(numb).length
+       if(lenth>0){ 
+          var x= lenth-1
+      var key= Object.keys(arr)[x]
+      var value=arr[key]
+      var code1=value["code"]
+       code=parseInt(code1)+1
+      }else{
+           code=100001
+      }
+      const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in 
@@ -37,8 +53,10 @@ document.getElementById("submit").onclick=function(){
         const errorMessage = error.message;
         alert(errorMessage)
       });
+      
+  }
+    })
     }
-
 }
 function Ready(){
     first= document.getElementById("first").value;
@@ -50,74 +68,22 @@ function Ready(){
   hostel= document.getElementById("hostel").value;
 }
 function InsertData(user){
-          Ready();
-          const dbref=ref(db);
-          get(child(dbref,"user/")).then((snapshot)=>{
-            if(snapshot.exists()){
-                var arr = snapshot.val()
-                var numb=  snapshot.val()
-              var lenth=Object.keys(numb).length
-             if(lenth>0){ 
-                var x= lenth-1
-            var key= Object.keys(arr)[x]
-            var value=arr[key]
-            var code1=value["code"]
-            var code=parseInt(code1)+1
-            }else{
-                var code=100001
-            }
-           
-              set(ref(db, 'user/'+code),{
-                  code:code,
-                  first: first,
-                  second: last,
-                  email:email,
-                  hostel: hostel,
-                  gender: gender,
-                  phone:[phone],
-                  key: code
-              })
-              .then(()=>{
-                set_info()
-              })
-             .catch((error)=>{
-              document.getElementById("loader").setAttribute("style", "display:none")
-               alert(error);
-             })
-            }
-          })
-          function set_info(){
-            get(child(dbref,"user/")).then((snapshot)=>{
-                if(snapshot.exists()){
-                    var arr = snapshot.val()
-                    var numb=  snapshot.val()
-                  var lenth=Object.keys(numb).length
-                  var x= lenth-1
-                  do{
-                    var key= Object.keys(arr)[x]
-                    var value=arr[key]
-                    var searchvalue=value["email"]
-                    if(email===searchvalue){
-                 var info= new Object
-                  info={
-                    user: value["code"],
-                    email:value["email"],
-                    first:value["first"],
-                    name:value["first"]+" "+value["second"],
-                    hostel:value["hostel"],
-                    gender:value["gender"],
-                    phone:value["phone"],
-                    key: value["key"],
-                    login: "yes"
-                  }
-                  localStorage.setItem("details", JSON.stringify(info) )
-                  window.location="index.html"
-                }
-                x--
-                }while(x>=0)
-                }
-              })
-          
-        }
+  set(ref(db, 'user/'+code),{
+    code:code,
+    first: first,
+    second: last,
+    email:email,
+    hostel: hostel,
+    gender: gender,
+    phone:[phone],
+    key: code
+  })
+  .then(()=>{
+  set_info()
+  })
+  .catch((error)=>{
+  document.getElementById("loader").setAttribute("style", "display:none")
+  alert(error);
+  }) 
 }
 

@@ -29,17 +29,19 @@ window.onload=function(){
 }
 
 function get_values(){
+  document.getElementById("cart_body").style.display = "none";
   document.getElementById("cart").style.display = "none"; 
   document.getElementById("loader").style.display = "block"; 
   cart_list=JSON.parse(localStorage.getItem("cart"))
-  length=cart_list.length-1
-  var evet=1
-  if(cart_list!==null){
-  
+ 
+  if(cart_list!==null&&cart_list.length!==0){
       const dbref=ref(db);
       get(child(dbref,"upload/")).then((snapshot)=>{
         if(snapshot.exists()){
+          length=cart_list.length-1
+          var evet=1
           document.getElementById("loader").style.display = "none";
+          document.getElementById("cart_body").style.display = "block";
           document.getElementById("cart").style.display = "block";  
          document.getElementById("cart").textContent=""
           newcart_item=JSON.parse(localStorage.getItem("cart"))
@@ -70,6 +72,11 @@ function get_values(){
         }
       })
      
+}else{
+  document.getElementById("loader").style.display = "none";
+  document.getElementById("cart_body").style.display = "block";
+  document.getElementById("no_items").style.display = "block";  
+ 
 }
 }
 
@@ -86,9 +93,9 @@ function createlist(num, code){
   var remove_text=document.createElement("p")
   var remove= document.createElement("div")
   var controls= document.createElement("div")
+  var anchr=document.createElement("a");
    
     view.classList.add("cart-view")
-    view.setAttribute("id", "cart-view"+num)
     image.classList.add("item-image")
     name.classList.add("item-name")
     price.classList.add("item-price")
@@ -100,6 +107,9 @@ function createlist(num, code){
     minus.setAttribute("id", "minus"+num)
     cart_num.setAttribute("id","cartnum"+num)
 
+    const myURL= new URL(window.location.protocol+"//"+window.location.host+"/product.html")
+    myURL.searchParams.append("product",code)
+    anchr.href=myURL
     remove_text.innerHTML="Remove"
     remove_img.src="images/ic_delete_black.png"
     add.src="images/ic_add_circle_black.png"
@@ -113,11 +123,13 @@ function createlist(num, code){
     var flex= document.createElement("div")
     var div= document.createElement("div")
     flex.classList.add("flex")
+    flex.setAttribute("id", "cart-view"+num)
     div.appendChild(name)
     div.appendChild(price)
     flex.appendChild(image)
     flex.appendChild(div)
-    view.appendChild(flex)
+    anchr.appendChild(flex)
+    view.appendChild(anchr)
 
     var flex= document.createElement("div")
     flex.classList.add("flex")
@@ -129,7 +141,7 @@ function createlist(num, code){
     controls.appendChild(cart_num)
     controls.appendChild(add)
     view.appendChild(controls)
-
+    
     cart.appendChild(view)
     add_cart("add"+num, "cartnum"+num, code)
     minus_cart("minus"+num, "cartnum"+num, code)

@@ -14,14 +14,24 @@
            alert{
                font-size: 25px;
            }
+           div{
+    align-content: center;
+    align-self: center;
+}
+.butt{
+    display: flex;
+}
        </style>
     </head>
     <body>
-        <article>
-            <b><p>Player</p></b>
+        <article style="  display: flex;">
+            <b><p>Player:</p></b>
             <b><p id="p">0</p></b>
+            <div style="width:100%"></div>
+            <b><p style="text-align: right;">Computer:</p></b>
+            <b ><p id="c" style="text-align: right;">0</p></b>
         </article>
-        <div>
+        <div style="width:300px; height:300px; margin: auto;">
         <div class="butt">
             <button id="1" onclick="play('1')" style="width:90px; height:90px"></button>
 <button id="2" onclick="play('2')" style="width:90px; height:90px"></button>

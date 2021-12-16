@@ -20,59 +20,61 @@ import{getDatabase, ref, set, get, child, update, remove}
 import { getAuth,signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
 const db= getDatabase();
 var  email, password;
+var info= new Object
 
 document.getElementById("submit").onclick=function(){
    Ready()
-   document.getElementById("loader").setAttribute("style", "display:block");
-if(email!==""&&password!==""){
-    const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        set_info()
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
-}
+   get(child(dbref,"user/")).then((snapshot)=>{
+    if(snapshot.exists()){
+        var arr = snapshot.val()
+        var numb=  snapshot.val()
+      var lenth=Object.keys(numb).length
+      var x= lenth-1
+      var evnt=1
+      do{
+        var key= Object.keys(arr)[x]
+        var value=arr[key]
+        var searchvalue=value["email"]
+        if(email===searchvalue){
+     
+      info={
+        user: value["code"],
+        email:value["email"],
+        first:value["first"],
+        name:value["first"]+" "+value["second"],
+        hostel:value["hostel"],
+        gender:value["gender"],
+        phone:value["phone"],
+        login: "yes",
+        key: value["key"]
+      }
+      localStorage.setItem("details", JSON.stringify(info) )
+      window.location="index.html"
+    }
+    x--
+    }while(x>=0)
+    }
+  sign_in()})
 }
 function Ready(){
     email= document.getElementById("email").value;
     password= document.getElementById("password").value;
 }
-function set_info(){
-    get(child(dbref,"user/")).then((snapshot)=>{
-        if(snapshot.exists()){
-            var arr = snapshot.val()
-            var numb=  snapshot.val()
-          var lenth=Object.keys(numb).length
-          var x= lenth-1
-          var evnt=1
-          do{
-            var key= Object.keys(arr)[x]
-            var value=arr[key]
-            var searchvalue=value["email"]
-            if(email===searchvalue){
-         var info= new Object
-          info={
-            user: value["code"],
-            email:value["email"],
-            first:value["first"],
-            name:value["first"]+" "+value["second"],
-            hostel:value["hostel"],
-            gender:value["gender"],
-            phone:value["phone"],
-            login: "yes",
-            key: value["key"]
-          }
-          localStorage.setItem("details", JSON.stringify(info) )
-          window.location="index.html"
-        }
-        x--
-        }while(x>=0)
-        }
-      })
+function sign_in(){
+  document.getElementById("loader").setAttribute("style", "display:block");
+  if(email!==""&&password!==""){
+      const auth = getAuth();
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          
+          const user = userCredential.user;
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+        });
+  }
+   
   
 }

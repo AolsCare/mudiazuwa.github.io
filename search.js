@@ -40,9 +40,12 @@ window.onload=function(){
         var value=arr[key]
         var searchvalue=value["name"]
         if(searchvalue.toLowerCase().includes(searchitem.toLowerCase())){
-            
+          const myURL= new URL(window.location.protocol+"//"+window.location.host+"/product.html")
+          myURL.searchParams.append("product",value["code"])
+          var anchr=document.createElement("a")
+          anchr.href=myURL
             var view=document.createElement("div")
-            view.classList.add("item_view")
+            anchr.classList.add("item_view")
             var image=document.createElement("img")
             image.classList.add("item_image")
             image.src=value["url0"]
@@ -59,8 +62,9 @@ window.onload=function(){
             detail.appendChild(price)
             view.appendChild(detail)
            view.setAttribute('id', evnt)
+           anchr.appendChild(view)
         var listview=document.getElementById("list")
-        listview.appendChild(view)
+        listview.appendChild(anchr)
         load(evnt, value["code"])
         evnt++
       }

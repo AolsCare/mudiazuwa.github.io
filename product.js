@@ -27,6 +27,9 @@ var avail="no"
 var newcart_item=new Array;
 var cn, lenth, item_code, key, cart_num, value, arr;
 window.onload=function(){
+  onopen()
+ }
+function onopen(){
   var params=new URLSearchParams(window.location.search)
   var searchitem=params.get("product")
  
@@ -88,12 +91,13 @@ window.onload=function(){
         sect=document.createElement("section")
       }
       sett(i)
-    }while(i<=6) 
+    }while(i<6) 
   
   })
-  
- }
-
+  .catch((error)=>{
+   onopen()
+  })
+}
 
 document.getElementById("slidercontainer").addEventListener('touchstart', handleTouchStart, false);        
 document.getElementById("slidercontainer").addEventListener('touchmove', handleTouchMove, false);
@@ -238,8 +242,12 @@ function sett(n){
  var x= Math.floor(Math.random()*lenth)+0
    key= Object.keys(arr)[x]
    value=arr[key]
+   const myURL= new URL(window.location.protocol+"//"+window.location.host+"/product.html")
+   myURL.searchParams.append("product",value["code"])
+   var anchr=document.createElement("a")
+   anchr.href=myURL
+   anchr.classList.add("items_view")
    var view=document.createElement("div")
-   view.classList.add("items_view")
    view.setAttribute('id', n)
    var image=document.createElement("img")
    image.classList.add("items_image")
@@ -255,9 +263,8 @@ function sett(n){
   price.setAttribute('style', 'color:#FF9800')
   view.appendChild(price)
   var body=document.getElementById("recom")
-  
-  sect.append(view)
+  anchr.appendChild(view)
+  sect.append(anchr)
   body.append(sect)
-  load(n, value["code"])
 }
 var sect;

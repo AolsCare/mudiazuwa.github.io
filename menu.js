@@ -32,14 +32,18 @@ function item(){
 }
 
 var x;
-var arr, key, value, lenth
+var arr, value, lenth
 function sett(n){
  
   x= Math.floor(Math.random()*lenth)+0
-   key= Object.keys(arr)[x]
+  var key= Object.keys(arr)[x]
    value=arr[key]
+   const myURL= new URL(window.location.protocol+"//"+window.location.host+"/product.html")
+   myURL.searchParams.append("product",value["code"])
+   var anchr=document.createElement("a")
+   anchr.href=myURL
    var view=document.createElement("div")
-   view.classList.add("items_view")
+   anchr.classList.add("items_view")
    view.setAttribute('id', n)
    var image=document.createElement("img")
    image.classList.add("items_image")
@@ -55,14 +59,16 @@ function sett(n){
   price.setAttribute('style', 'color:#FF9800')
   view.appendChild(price)
   var body=document.getElementById("body")
-  
-  sect.append(view)
+  anchr.appendChild(view)
+  sect.append(anchr)
   body.append(sect)
-  load(n, value["code"])
 }
 var sect;
 document.getElementById("div2").addEventListener('search', sear);
 window.onload=function(){
+ onopen()
+ }
+ function onopen(){
   document.getElementById("title").innerHTML=window.location.host
   var i=0;
   const dbref=ref(db);
@@ -83,9 +89,10 @@ window.onload=function(){
     }while(i<=lenth+1) 
   }
   })
- 
+  .catch((error)=>{
+    onopen()
+  })
  }
- 
  function load(view, code){
   document.getElementById(view).onclick=function() {
     const myURL= new URL(window.location.protocol+"//"+window.location.host+"/product.html")
@@ -94,39 +101,31 @@ window.onload=function(){
   }
 }
 function input_search(){
-  document.getElementById("div2").oninput=function(){
-  var searchitem=params.get("search")
-  document.getElementById("div2").value= searchitem
-  const dbref=ref(db);
-  get(child(dbref,"upload/")).then((snapshot)=>{
-    if(snapshot.exists()){
-      document.getElementById("loader").setAttribute("style", "display:none")
-      var arr = snapshot.val()
-      var numb=  snapshot.val()
-    var lenth=Object.keys(numb).length
-    var x= lenth-1
+  var searchitem=document.getElementById("div2").value
+   var x= lenth
     var evnt=1
     var avail=0
+    var datalist= document.getElementById("history")
+    datalist.innerHTML=""
     do{
-      var key= Object.keys(arr)[x]
+     var key= Object.keys(arr)[x]
       var value=arr[key]
       var searchvalue=value["name"]
       if(searchvalue.toLowerCase().includes(searchitem.toLowerCase())){
           var option=document.createElement("option")
-          var datalist= document.getElementById("history")
+        
           option.setAttribute("value",value["name"] )
           datalist.appendChild(option);
           avail=1
         }
         x--
       }while(x>=0)
+      if(avail==0){
+        get_history(searchitem)
+      }
     }
-    })
-    if(avail==0){
-      get_history(searchitem)
-    }
-  }
-}
+   
+   
 function get_history(){
  var history_array= JSON.parse(localStorage.getItem("history"))
   for(var i=0; i<history_array; i++){
@@ -136,3 +135,4 @@ function get_history(){
     datalist.appendChild(option);
   }
 }
+document.getElementById("div2")-addEventListener("input", input_search)
