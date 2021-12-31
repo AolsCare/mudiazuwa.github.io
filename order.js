@@ -81,6 +81,9 @@ function get_values(){
     }
     amount=price+100
     document.getElementById("subtotal").innerHTML="₦"+price
+    document.getElementById("name").innerHTML=details["name"]
+    document.getElementById("phone").innerHTML=details["phone"]
+    document.getElementById("hostel").innerHTML=details["hostel"]
     document.getElementById("total").innerHTML="₦"+amount
   sessionStorage.setItem("amount", amount)
   })
