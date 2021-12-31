@@ -75,7 +75,9 @@ function payWithPaystack(e) {
           var reference=data["data"]["reference"]
           var date= new Date()
           var date_time=date.getMonth()+1+"/"+date.getDate()+"/"+date.getFullYear()+" "+date.getHours()+":"+date.getMinutes()
-          upload_orderadmin()
+          document.getElementById("body").style.display = "none"; 
+  document.getElementById("loader").style.display = "block"; 
+upload_orderadmin()
         }
       })
       
