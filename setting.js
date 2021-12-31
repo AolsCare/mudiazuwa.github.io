@@ -22,7 +22,7 @@ var details=JSON.parse( localStorage.getItem("details"))
 if(details!==null){
   document.getElementById("login").innerHTML="Logout"
   document.getElementById("loginrequest").innerHTML=details["email"]
-  document.getElementById("username").innerHTML=details["name"]
+  document.getElementById("username").innerHTML=details["first"]
 }
 }
 document.getElementById("login").onclick=function(){

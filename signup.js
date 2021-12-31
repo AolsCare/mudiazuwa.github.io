@@ -25,7 +25,12 @@ document.getElementById("submit").onclick=function(){
    
    document.getElementById("loader").setAttribute("style", "display:block")
    if(first!==""&&last!==""&&email!==""&&password!==""&&phone!==""&&gender!==""&&hostel!==""){
-    const dbref=ref(db);
+    get_data()
+    }
+}
+
+function get_data(){
+  const dbref=ref(db);
     get(child(dbref,"user/")).then((snapshot)=>{
       if(snapshot.exists()){
           var arr = snapshot.val()
@@ -40,24 +45,26 @@ document.getElementById("submit").onclick=function(){
       }else{
            code=100001
       }
-      const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        InsertData(user)
-      })
-      .catch((error) => {
-        document.getElementById("loader").setAttribute("style", "display:none")
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        alert(errorMessage)
-      });
+     sign_up()
       
   }
     })
-    }
+    .catch((error)=>get_data())
 }
+
+function sign_up(){
+  const auth = getAuth();
+  createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      // Signed in 
+      const user = userCredential.user;
+      InsertData(user)
+    })
+    .catch((error) => {
+      sign_up
+    });
+}
+
 function Ready(){
     first= document.getElementById("first").value;
     last= document.getElementById("last").value;
@@ -75,15 +82,30 @@ function InsertData(user){
     email:email,
     hostel: hostel,
     gender: gender,
-    phone:[phone],
+    phone:phone,
     key: code
   })
   .then(()=>{
   set_info()
   })
   .catch((error)=>{
-  document.getElementById("loader").setAttribute("style", "display:none")
-  alert(error);
+  InsertData(user)
   }) 
 }
 
+function set_info(){
+  var details= new Object
+  details={
+    user: code,
+    userkey: code,
+    email: email,
+    first: first,
+    name: first+" "+ last,
+    hostel: hostel,
+    gender: gender,
+    phone: phone,
+    login: "yes"
+  }
+  localStorage.setItem("detail", JSON.stringify(details))
+  window.location="index.html"
+}

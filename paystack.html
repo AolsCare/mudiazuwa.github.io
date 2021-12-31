@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      body{
+        margin:-1px;
+      }
+      #submit_button{
+        background: #8BC34A;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        border:none;
+        width:80%;
+        height:40px;
+        margin:0 10% 0%;
+      }
+      .paymentForm{
+        height:200px;
+        position: relative;
+      }
+      .center{
+        margin:0;
+        position: absolute;
+        top:50%;
+        left:50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        width:100%;
+        height:40px
+      }
+      </style>
+      </head>
+    <body>
+    <form id="paymentForm">
+      <div class="center">
+  <div class="form-submit">
+    <button id="submit_button" type="submit" onclick="payWithPaystack()"> Pay </button>
+  </div>
+  </div>
+</form>
+<script>
+    const paymentForm = document.getElementById('paymentForm');
+paymentForm.addEventListener("submit", payWithPaystack, false); 
+function payWithPaystack(e) {
+
+}
+    function later(){
+        fetch("https://api.paystack.co/transaction/initialize",{
+    method:"POST",
+    headers:{
+         'Authorization': "Bearer sk_test_e3a39ba27e5d0722ddc6f1e89afaa4bd9c180225",
+            'Content-Type': "application/json"
+        },
+        body: JSON.stringify({
+            amount:500000,
+            email:"mudiaosazuwa@gmail.com"
+        })
+      }).then(res=>{return res.json()})
+      .then(data=>{
+          console.log(data)
+      })
+    }
+</script>
+</body>
+ </html>

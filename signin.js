@@ -18,12 +18,14 @@ const analytics = getAnalytics(app);
 import{getDatabase, ref, set, get, child, update, remove}
   from "https://www.gstatic.com/firebasejs/9.4.1/firebase-database.js";
 import { getAuth,signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.4.1/firebase-auth.js";
+
 const db= getDatabase();
 var  email, password;
 var info= new Object
 
 document.getElementById("submit").onclick=function(){
    Ready()
+   const dbref=ref(db);
    get(child(dbref,"user/")).then((snapshot)=>{
     if(snapshot.exists()){
         var arr = snapshot.val()
@@ -48,13 +50,13 @@ document.getElementById("submit").onclick=function(){
         login: "yes",
         key: value["key"]
       }
-      localStorage.setItem("details", JSON.stringify(info) )
-      window.location="index.html"
     }
     x--
     }while(x>=0)
+    sign_in()
     }
-  sign_in()})
+  
+})
 }
 function Ready(){
     email= document.getElementById("email").value;
@@ -69,10 +71,11 @@ function sign_in(){
           
           const user = userCredential.user;
           // ...
+          localStorage.setItem("details", JSON.stringify(info) )
+      window.location="index.html"
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
+          sign_in()
         });
   }
    

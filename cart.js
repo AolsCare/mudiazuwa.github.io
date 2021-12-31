@@ -24,6 +24,8 @@ var newcart_item=new Array;
 var cart_list=new Array
 
 var length, item_name,item_price,item_image,item_num, cn, item_code, key, cart_number;
+var price=0
+
 window.onload=function(){
  get_values()
 }
@@ -61,20 +63,24 @@ function get_values(){
               item_name=value["name"]
               item_image=value["url0"]
              var item_code=value["code"]
+             price+=parseInt(item_price)*parseInt(item_num)
               createlist(evet, item_code)
               evet++
               cn=length
+              
           }
          x++
         }while(x<lenth)
         length--
       }while(length>=0)
         }
+        document.getElementById("total").innerHTML="₦"+price
       })
-     
+     .catch((error)=>get_values())
 }else{
   document.getElementById("loader").style.display = "none";
   document.getElementById("cart_body").style.display = "block";
+  document.getElementById("info").style.display = "none";
   document.getElementById("no_items").style.display = "block";  
  
 }
@@ -116,12 +122,13 @@ function createlist(num, code){
     minus.src="images/ic_remove_circle_black.png"
     image.src=item_image
     name.innerHTML=item_name
-    price.innerHTML=item_price
+    price.innerHTML="₦"+item_price
     cart_num.innerHTML=item_num
 
 
     var flex= document.createElement("div")
     var div= document.createElement("div")
+    div.style.padding="8px"
     flex.classList.add("flex")
     flex.setAttribute("id", "cart-view"+num)
     div.appendChild(name)

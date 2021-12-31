@@ -2,9 +2,8 @@ var ctime;
 var turn=0;
 var pl="X";
 var co="O";
-var cscore=document.getElementById("c").innerHTML
+var cscore=document.getElementById("c")
 var pscore=document.getElementById("p")
-pscore.innerHtml= parseInt(pscore.innerHtml)+1
 function play(x){
     var but= document.getElementById(x).innerHTML
     if (but===""&& turn==0){
@@ -154,7 +153,7 @@ function cwin(x,y,z){
     var second=document.getElementById(y).innerHTML
     var third=document.getElementById(z).innerHTML
 if(first===co&&second===co&&third===co){
-    alert("you lost")
+    cscore.innerHTML=parseInt(cscore.innerHTML)+1
     clearTimeout(ctime)
     setTimeout(clea, 1000)
 }
