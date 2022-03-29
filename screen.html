@@ -16,11 +16,21 @@
         <div style="margin: 5px;">Height:</div>
         <div id="height"></div>
         </div>
+        <div style="display: flex; ">
+            <div style="margin: 5px;">Inner Width:</div>
+            <div id="i-width"></div>
+            </div>
+            <div style="display: flex; ">
+                <div style="margin: 5px;">Inner Height:</div>
+                <div id="i-height"></div>
+                </div>
 </div>
 <script>
     window.onload=function(){
-        document.getElementById("width").textContent=window.innerWidth
-        document.getElementById("height").textContent=window.innerHeight
+        document.getElementById("width").textContent=window.outerWidth
+        document.getElementById("height").textContent=window.outerHeight
+        document.getElementById("i-width").textContent=window.innerWidth
+        document.getElementById("i-height").textContent=window.innerHeight
     }
 </script>
 </body>
