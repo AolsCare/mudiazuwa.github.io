@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div style="height: 60px; margin: auto; font-size: 30px;">
+    <div style="display: flex; ">
+    <div style="margin: 5px;">Width:</div>
+    <div id="width"></div>
+    </div>
+    <div style="display: flex; ">
+        <div style="margin: 5px;">Height:</div>
+        <div id="height"></div>
+        </div>
+</div>
+<script>
+    window.onload=function(){
+        document.getElementById("width").textContent=window.innerWidth
+        document.getElementById("height").textContent=window.innerHeight
+    }
+</script>
+</body>
+</html>
