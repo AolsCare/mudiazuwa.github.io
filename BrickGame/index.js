@@ -11,10 +11,10 @@ let game= new Game(GAME_WIDTH, GAME_HEIGHT);
 let lastTime=0
 window.addEventListener('resize', resizeCanvas, false)
 function resizeCanvas(){
-    canvas.width=window.innerWidth;
-    canvas.height=window.innerHeight;
-    game.gameWidth=window.innerWidth;
-   game.gameHeight=window.innerHeight;
+    canvas.width=window.outerWidth;
+    canvas.height=window.outerHeight;
+    game.gameWidth=window.outerWidth;
+   game.gameHeight=window.outerHeight;
 }
 resizeCanvas()
 
